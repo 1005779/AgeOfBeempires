@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Resource : MonoBehaviour {
 
+
 	// Use this for initialization
 	void Start () {
 	
@@ -12,4 +13,9 @@ public class Resource : MonoBehaviour {
 	void Update () {
 	
 	}
+
+    public void Transfer()
+    {
+        float nectar = 2;
+    }
 }

@@ -4,22 +4,21 @@ using System.Collections;
 public class QueenHive : MonoBehaviour {
 
     // Variables for Currency conversion
-    private int pollen;
-    private int honey;
+    private float pollen = 0;
+    private float honey;
 
     // Variables for Build Materials
-    private int workers;
-    private int wax;
+    private float workers;
+    private float wax;
 
     // Build Costs
-    public int droneHive = 2;
+    public float droneHive = 2;
 
     // Timers Variables
-    public int honeyTime = 2;
+    public float honeyTime = 2;
 
     // Prefabs to instantiate
-    public GameObject DroneHive;
-    public GameObject hiveSpot;
+    public GameObject droneHivePrefab;
 
     // Use this for initialization
     void Start()
@@ -32,13 +31,19 @@ public class QueenHive : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+        Food();
+        Currency();
 	}
 
-    public void DropOff(int nectar)
+    // Transfer The Pollen Value To the bee then tell it to wait state
+    public void OnColliderEnter(Collider otherObject)
     {
-        pollen = pollen + (nectar / 2);
+        if (otherObject.tag == "Bee")
+        {
+                        
+        }            
     }
+
 
     public void Food()
     {
