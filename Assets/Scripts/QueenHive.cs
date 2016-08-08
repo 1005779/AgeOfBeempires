@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class QueenHive : MonoBehaviour {
+    GameManager gameManager;
 
     // Variables for Currency conversion
     private float pollen = 0;
@@ -23,6 +24,7 @@ public class QueenHive : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
+        gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         // Start Values so player can play straight away
         honey = 8;
         workers = 2;
@@ -36,12 +38,11 @@ public class QueenHive : MonoBehaviour {
 	}
 
     // Transfer The Pollen Value To the bee then tell it to wait state
-    public void OnColliderEnter(Collider otherObject)
+    public void GiveNectar(float nectar)
     {
-        if (otherObject.tag == "Bee")
-        {
-                        
-        }            
+        //take bees pollen and give it to the hives count
+        pollen += nectar;
+        // set the state to wait / colection state ***Not implimented***
     }
 
 
@@ -66,10 +67,10 @@ public class QueenHive : MonoBehaviour {
 
     public void BuildDroneHive()
     {
-        if (Input.GetKeyDown("space") && wax >= droneHive)
+        if (Input.GetAxis("SDroneHive") == 0 && wax >= droneHive)
         {
             wax -= droneHive;
-           // Instantiate(DroneHive,);
+            // Instantiate(DroneHive,  the outcome of this >> gameManager.GetMousePos(););
         }
     }
 }

@@ -71,7 +71,7 @@ public class CameraControllers : MonoBehaviour
     {
         // update the current zoom
         float scrollInput = Input.GetAxis("Mouse ScrollWheel") * zoomSpeed * Time.deltaTime;
-        currentZoom = Mathf.Clamp01(currentZoom + scrollInput);
+        currentZoom = Mathf.Clamp01(currentZoom - scrollInput);
 
         // for smoother movement run current zoom through cos and use the new value
         float lerpFactor = Mathf.Clamp01(0.5f * (1.0f - Mathf.Cos(currentZoom * Mathf.PI)));

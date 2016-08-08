@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class SelectionManager : MonoBehaviour {
+    GameManager gameManager;
+
     public Vector3 mousePosition; // position in world space
 
     // selection bounds
@@ -16,7 +18,7 @@ public class SelectionManager : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-
+        gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame

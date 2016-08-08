@@ -4,7 +4,7 @@ using System.Collections;
 public class Bee : MonoBehaviour {
     private NavMeshAgent agent;
 
-    private float pollen = 0;
+    private float nectar = 0;
 
     public float moveSpeed = 5.0f;
 
@@ -21,6 +21,8 @@ public class Bee : MonoBehaviour {
     void Update()
     {
         agent.SetDestination(destination);
+
+        //set up state change to return to hive once currency = 10
     }
 
     public void MoveTo(Vector3 newDestination)
@@ -28,19 +30,24 @@ public class Bee : MonoBehaviour {
         destination = newDestination;
     }
 
-   public void OnTriggerEnter(Collider recource)
+   public void OnTriggerEnter(Collider otherObject)
     {
-        if (recource.tag == "Resource")
+        //collecting the currency
+        if (otherObject.tag == "Resource")
         {
-            pollen += 2;
+            nectar += 2;
             Debug.Log("Recource Gained");
-        }            
+        }  
+        
+        //process to trancfer currency
+        if(otherObject.tag == "QueenHive")
+        {
+            otherObject.GetComponent<QueenHive>().GiveNectar(nectar);
+            Debug.Log("Ca$h Honey" + nectar);
+            nectar = 0;
+            
+            // set bee state to wait ******
+        }      
     }
 
-    // potentially to give poollen to hives pollen pool
-    public void GiveNectar(float nectar)
-    {
-        nectar += pollen;
-    }
-    
 }
