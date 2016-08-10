@@ -4,6 +4,8 @@ using System.Collections;
 public class QueenHive : MonoBehaviour {
     GameManager gameManager;
 
+    public Vector3 mousePostiton;
+
     // Variables for Currency conversion
     private float pollen = 0;
     private float honey;
@@ -67,9 +69,11 @@ public class QueenHive : MonoBehaviour {
 
     public void BuildDroneHive()
     {
+        
         if (Input.GetAxis("SDroneHive") == 0 && wax >= droneHive)
         {
             wax -= droneHive;
+            
             // Instantiate(DroneHive,  the outcome of this >> gameManager.GetMousePos(););
         }
     }
