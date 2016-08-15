@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Resource : MonoBehaviour {
-
+public class DroneHive : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -13,9 +12,4 @@ public class Resource : MonoBehaviour {
 	void Update () {
 	
 	}
-
-    public void Transfer(float nectar)
-    {
-        nectar = nectar + 2;
-    }
 }

@@ -16,15 +16,11 @@ public class SelectionTrigger : MonoBehaviour {
     }
 
     void Update()
-    {
-        // Generate a ray based on the mouse position
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        // Find where in the world the mouse cursor is over
-        RaycastHit hit;
-        if (Input.GetMouseButton(0) && Physics.Raycast(ray, out hit))
+    {       
+        // Check  if the mousebutton is down and if we are ofer the level geometry
+        if (Input.GetMouseButton(0) && selectionManager.mouseOverLegelGeometry)
         {
-            mousePositionB = hit.point;
+            mousePositionB = selectionManager.mousePosition;
 
             // work out the scale
             Vector3 newScale = mousePositionA - mousePositionB;

@@ -3,8 +3,7 @@ using System.Collections;
 
 public class QueenHive : MonoBehaviour {
     GameManager gameManager;
-
-    public Vector3 mousePostiton;
+    SelectionManager selectionManager;
 
     // Variables for Currency conversion
     private float pollen = 0;
@@ -14,19 +13,22 @@ public class QueenHive : MonoBehaviour {
     private float workers;
     private float wax;
 
-    // Build Costs
+    // things for the build functions
+    public GameObject droneHivePrefab;
     public float droneHive = 2;
+
+    public GameObject workerHivePrefab;
+    public float workerHive = 2;
 
     // Timers Variables
     public float honeyTime = 2;
 
-    // Prefabs to instantiate
-    public GameObject droneHivePrefab;
-
     // Use this for initialization
     void Start()
     {
+        selectionManager = GameManager.FindObjectOfType<SelectionManager>();
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        
         // Start Values so player can play straight away
         honey = 8;
         workers = 2;
@@ -65,16 +67,5 @@ public class QueenHive : MonoBehaviour {
             {
                 wax += honey;
             }               
-    }
-
-    public void BuildDroneHive()
-    {
-        
-        if (Input.GetAxis("SDroneHive") == 0 && wax >= droneHive)
-        {
-            wax -= droneHive;
-            
-            // Instantiate(DroneHive,  the outcome of this >> gameManager.GetMousePos(););
-        }
     }
 }

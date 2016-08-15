@@ -1,19 +1,27 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Bee : MonoBehaviour {
     private NavMeshAgent agent;
+    QueenHive queenHive;
+    SelectionManager selectionManager;
 
-    private GameObject[] recources;
+    // Variables used for gathereing state
+    private GameObject[] flowers;
+    private GameObject fMin = null;
+    private float minDist = Mathf.Infinity;
+    GameObject closestRecource;
 
-    private float nectar = 0;
+    // Variables used for Bees movement and currency
+    public float nectar = 0;
     private float maxNextar = 10;
-
     public float moveSpeed = 5.0f;
-
     private Vector3 destination;
 
     //Animation Variables
+    Animation animationComponent;
+    private bool animationLock = false;
 
     // State Variables
     public enum PlayerState
@@ -24,15 +32,26 @@ public class Bee : MonoBehaviour {
         Attack,
         Move
     }
-
     public PlayerState playerState;
 
     // Use this for initialization
     void Start()
     {
-        playerState = PlayerState.Idle;
+        selectionManager = GameManager.FindObjectOfType<SelectionManager>();
+        queenHive = GameManager.FindObjectOfType<QueenHive>();
+
+        animationComponent = GetComponent<Animation>();
+
         agent = GetComponent<NavMeshAgent>();
-        destination = transform.position;
+        destination = transform.position;        
+    }
+
+    IEnumerator AnimationDelay(PlayerState thisPlayerState, float waitTime)
+    {
+        playerState = thisPlayerState;
+        animationLock = true;
+        yield return new WaitForSeconds(waitTime);
+        animationLock = false;
     }
 
     // Update is called once per frame
@@ -40,24 +59,34 @@ public class Bee : MonoBehaviour {
     {
         agent.SetDestination(destination);
 
-        StateMode();
+        GatherState();
+        ReturnState();
+        AttackState();
+
+        if (nectar > maxNextar)
+        {
+            nectar = maxNextar;
+            //playerState = PlayerState.Return;
+        }
     }
 
     public void MoveTo(Vector3 newDestination)
     {
-        playerState = PlayerState.Move;
+       // playerState = PlayerState.Move;
         destination = newDestination;
     }
+
+
 
    public void OnTriggerEnter(Collider otherObject)
     {
         //collecting the currency
         if (otherObject.tag == "Resource" && nectar < maxNextar)
         {
-            nectar += 2;
+            otherObject.GetComponent<Resource>().Transfer(nectar);
             Debug.Log("Recource Gained");
-            playerState = PlayerState.Gather;             
-            //remove from array
+            Destroy(otherObject.gameObject);
+            //playerState = PlayerState.Gather;
         }  
         
         //process to trancfer currency
@@ -66,27 +95,58 @@ public class Bee : MonoBehaviour {
             otherObject.GetComponent<QueenHive>().GiveNectar(nectar);
             Debug.Log("Ca$h Honey" + nectar);
             nectar = 0;
-
-            playerState = PlayerState.Idle;
+            GatherState();
+            //playerState = PlayerState.Idle;
         }      
     }
 
-    public void RecourceCheck()
+    //Find the closest
+    public void Resource()
     {
-        recources = GameObject.FindGameObjectsWithTag("Recource");
+        flowers = GameObject.FindGameObjectsWithTag("Resource");
+        Vector3 CurrentPos = transform.position;
+        foreach (GameObject f in flowers)
+        {
+            float dist = Vector3.Distance(f.transform.position, CurrentPos);
+            if(dist < minDist)
+            {
+                fMin = f;
+                minDist = dist;
+            }
+        }
+        closestRecource = fMin;
     }
 
-    public void StateMode()
+
+    public void GatherState()
     {
-        if(playerState == PlayerState.Gather)
+        if (playerState == PlayerState.Gather)
         {
-            RecourceCheck();
-            while(nectar < maxNextar)
+            while (nectar < maxNextar && flowers.Length < 0)
             {
-                //select closest resource
-                // go to Recourse
-            } 
+                Resource();
+                transform.Translate(closestRecource.transform.position);
+            }               
+        } /*else
+            playerState = PlayerState.Return;*/
+    }
+
+    public void ReturnState()
+    {
+        if(playerState == PlayerState.Return)
+        {
+            destination = queenHive.transform.position;
         }
+    }
+
+    public void AttackState()
+    {
+        if (playerState == PlayerState.Attack)
+        {
+            animationLock = true;
+        }
+        else
+            animationLock = false;
     }
 
 }
