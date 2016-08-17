@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 public class Bee : MonoBehaviour {
     private NavMeshAgent agent;
-    QueenHive queenHive;
-    SelectionManager selectionManager;
+    private QueenHive queenHive;
+    private SelectionManager selectionManager;
 
     // Variables used for gathereing state
     private GameObject[] flowers;
@@ -20,7 +20,7 @@ public class Bee : MonoBehaviour {
     private Vector3 destination;
 
     //Animation Variables
-    Animation animationComponent;
+    private Animator animatorComponent;
     private bool animationLock = false;
 
     // State Variables
@@ -40,7 +40,7 @@ public class Bee : MonoBehaviour {
         selectionManager = GameManager.FindObjectOfType<SelectionManager>();
         queenHive = GameManager.FindObjectOfType<QueenHive>();
 
-        animationComponent = GetComponent<Animation>();
+        animatorComponent = GetComponent<Animator>(); // Get the animator
 
         agent = GetComponent<NavMeshAgent>();
         destination = transform.position;        
@@ -57,6 +57,8 @@ public class Bee : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        animatorComponent.SetFloat("WalkSpeed", Mathf.Max(0.01f, agent.velocity.magnitude / agent.speed));
+
         agent.SetDestination(destination);
 
         GatherState();
