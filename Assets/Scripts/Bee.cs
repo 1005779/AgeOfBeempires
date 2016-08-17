@@ -68,13 +68,13 @@ public class Bee : MonoBehaviour {
         if (nectar > maxNextar)
         {
             nectar = maxNextar;
-            //playerState = PlayerState.Return;
+            playerState = PlayerState.Return;
         }
     }
 
     public void MoveTo(Vector3 newDestination)
     {
-       // playerState = PlayerState.Move;
+        playerState = PlayerState.Move;
         destination = newDestination;
     }
 
@@ -88,7 +88,7 @@ public class Bee : MonoBehaviour {
             otherObject.GetComponent<Resource>().Transfer(nectar);
             Debug.Log("Recource Gained");
             Destroy(otherObject.gameObject);
-            //playerState = PlayerState.Gather;
+            playerState = PlayerState.Gather;
         }  
         
         //process to trancfer currency
@@ -98,11 +98,11 @@ public class Bee : MonoBehaviour {
             Debug.Log("Ca$h Honey" + nectar);
             nectar = 0;
             GatherState();
-            //playerState = PlayerState.Idle;
+            playerState = PlayerState.Idle;
         }      
     }
 
-    //Find the closest
+    //Find the closest Recource
     public void Resource()
     {
         flowers = GameObject.FindGameObjectsWithTag("Resource");
@@ -129,13 +129,13 @@ public class Bee : MonoBehaviour {
                 Resource();
                 transform.Translate(closestRecource.transform.position);
             }               
-        } /*else
-            playerState = PlayerState.Return;*/
+        } else
+            playerState = PlayerState.Idle;
     }
 
     public void ReturnState()
     {
-        if(playerState == PlayerState.Return)
+        if (playerState == PlayerState.Return)
         {
             destination = queenHive.transform.position;
         }
