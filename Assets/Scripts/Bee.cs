@@ -8,19 +8,21 @@ public class Bee : MonoBehaviour {
     private SelectionManager selectionManager;
 
     // Variables used for gathereing state
-    private GameObject[] flowers;
+    private GameObject[] flowers; // Array of all the recources
     private GameObject fMin = null;
     private float minDist = Mathf.Infinity;
-    GameObject closestRecource;
+    Vector3 closestRecource;
 
     // Variables used for Bees movement and currency
-    public float nectar = 0;
-    private float maxNextar = 10;
-    public float moveSpeed = 5.0f;
-    private Vector3 destination;
+    public float nectar = 0; // Honey Carry over
+    public float pollen = 0; // Wax Carry over
+    private float maxNextar = 10; // Max Honey carry over
+    private float maxPollen = 25; // Max Wax carry over
+    public float moveSpeed = 5.0f; 
+    private Vector3 destination; // Vector fed to the navmesh agent
 
     //Animation Variables
-    private Animator animatorComponent;
+    private Animator animator;
     private bool animationLock = false;
 
     // State Variables
@@ -40,10 +42,10 @@ public class Bee : MonoBehaviour {
         selectionManager = GameManager.FindObjectOfType<SelectionManager>();
         queenHive = GameManager.FindObjectOfType<QueenHive>();
 
-        animatorComponent = GetComponent<Animator>(); // Get the animator
+        animator = GetComponent<Animator>(); // Get the animator
 
         agent = GetComponent<NavMeshAgent>();
-        destination = transform.position;        
+        destination = transform.position;
     }
 
     IEnumerator AnimationDelay(PlayerState thisPlayerState, float waitTime)
@@ -57,7 +59,7 @@ public class Bee : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        animatorComponent.SetFloat("WalkSpeed", Mathf.Max(0.01f, agent.velocity.magnitude / agent.speed));
+        animator.SetFloat("WalkSpeed", Mathf.Max(0.01f, agent.velocity.magnitude / agent.speed));
 
         agent.SetDestination(destination);
 
@@ -85,7 +87,8 @@ public class Bee : MonoBehaviour {
         //collecting the currency
         if (otherObject.tag == "Resource" && nectar < maxNextar)
         {
-            otherObject.GetComponent<Resource>().Transfer(nectar);
+            nectar += otherObject.gameObject.GetComponent<Resource>().honey;
+            pollen += otherObject.gameObject.GetComponent<Resource>().wax;
             Debug.Log("Recource Gained");
             Destroy(otherObject.gameObject);
             playerState = PlayerState.Gather;
@@ -94,11 +97,11 @@ public class Bee : MonoBehaviour {
         //process to trancfer currency
         if(otherObject.tag == "QueenHive")
         {
-            otherObject.GetComponent<QueenHive>().GiveNectar(nectar);
+            otherObject.GetComponent<QueenHive>().GiveNectar(nectar, pollen);
             Debug.Log("Ca$h Honey" + nectar);
             nectar = 0;
+            pollen = 0;
             GatherState();
-            playerState = PlayerState.Idle;
         }      
     }
 
@@ -116,7 +119,7 @@ public class Bee : MonoBehaviour {
                 minDist = dist;
             }
         }
-        closestRecource = fMin;
+        closestRecource = fMin.transform.position;
     }
 
 
@@ -124,10 +127,10 @@ public class Bee : MonoBehaviour {
     {
         if (playerState == PlayerState.Gather)
         {
-            while (nectar < maxNextar && flowers.Length < 0)
+            while (nectar < maxNextar && flowers.Length == 0)
             {
                 Resource();
-                transform.Translate(closestRecource.transform.position);
+                MoveTo(closestRecource);
             }               
         } else
             playerState = PlayerState.Idle;
@@ -137,7 +140,7 @@ public class Bee : MonoBehaviour {
     {
         if (playerState == PlayerState.Return)
         {
-            destination = queenHive.transform.position;
+            MoveTo(queenHive.transform.position);
         }
     }
 

@@ -1,10 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Resource : MonoBehaviour {
-
-    public float honey = 2;
-    public float wax = 5;
+public class WorkerHive : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {

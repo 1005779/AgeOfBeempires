@@ -6,12 +6,12 @@ public class QueenHive : MonoBehaviour {
     SelectionManager selectionManager;
 
     // Variables for Currency conversion
-    private float pollen = 0;
-    private float honey;
+    public float pollen = 0;
+    public float honey;
 
     // Variables for Build Materials
-    private float workers;
-    private float wax;
+    private float workers = 0;
+    public float wax;
 
     // things for the build functions
     public GameObject droneHivePrefab;
@@ -31,21 +31,22 @@ public class QueenHive : MonoBehaviour {
         
         // Start Values so player can play straight away
         honey = 8;
-        workers = 2;
+        workers += 2;
         wax = 8;
     }
 	
 	// Update is called once per frame
 	void Update () {
         Food();
-        Currency();
+        //Currency();
 	}
 
     // Transfer The Pollen Value To the bee then tell it to wait state
-    public void GiveNectar(float nectar)
+    public void GiveNectar(float nectar, float goop)
     {
         //take bees pollen and give it to the hives count
         pollen += nectar;
+        wax += goop;
         // set the state to wait / colection state ***Not implimented***
     }
 
@@ -66,6 +67,7 @@ public class QueenHive : MonoBehaviour {
         if (honey >= 2)
             {
                 wax += honey;
+                honey -= wax;
             }               
     }
 }

@@ -5,12 +5,12 @@ public class BeeAnimation : MonoBehaviour {
 
     Bee bee;
 
-    Animation animationComponent;
+    Animator animationComponent;
 
 	// Use this for initialization
 	void Start () {
         bee = GetComponent<Bee>();
-        animationComponent = GetComponent<Animation>();	
+        animationComponent = GetComponent<Animator>();	
 	}
 	
 	// Update is called once per frame
@@ -21,24 +21,21 @@ public class BeeAnimation : MonoBehaviour {
         {
 
             case Bee.PlayerState.Idle:
-                animationComponent.Play("Idle");
+                animationComponent.Play("BeeIdleAnimation");
                 break;
 
             case Bee.PlayerState.Move:
-                animationComponent.Play("Idle");
+                animationComponent.Play("BeeMoveAnimation");
                 break;
 
             case Bee.PlayerState.Gather:
-                animationComponent.Play("Idle");
+                animationComponent.Play("BeeMoveAnimation");
                 break;
 
             case Bee.PlayerState.Return:
-                animationComponent.Play("Idle");
+                animationComponent.Play("BeeMoveAnimation");
                 break;
-
-            case Bee.PlayerState.Attack:
-                animationComponent.Play("Attack");
-                break;
+                            
         }
     }
 }

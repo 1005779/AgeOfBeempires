@@ -9,6 +9,7 @@ TagManager:
   - Bee
   - Hive
   - QueenHive
+  - WarriorBee
   layers:
   - Default
   - TransparentFX

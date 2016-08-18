@@ -35,7 +35,9 @@ public class UIController : MonoBehaviour {
         Text();
 
         timer += Time.deltaTime;
-	
+
+        Honey = queenHive.honey;
+        Wax = queenHive.wax;
 	}
 
     private void Text()

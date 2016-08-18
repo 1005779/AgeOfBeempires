@@ -6,6 +6,7 @@ public class SelectionTrigger : MonoBehaviour {
     private SelectionManager selectionManager;
 
     public List<GameObject> selectedBees = new List<GameObject>();
+    public List<GameObject> selectedWBees = new List<GameObject>();
 
     public Vector3 mousePositionA;
     public Vector3 mousePositionB;
@@ -18,7 +19,7 @@ public class SelectionTrigger : MonoBehaviour {
     void Update()
     {       
         // Check  if the mousebutton is down and if we are ofer the level geometry
-        if (Input.GetMouseButton(0) && selectionManager.mouseOverLegelGeometry)
+        if (Input.GetMouseButton(0) && selectionManager.mouseOverLevelGeometry)
         {
             mousePositionB = selectionManager.mousePosition;
 
@@ -34,6 +35,7 @@ public class SelectionTrigger : MonoBehaviour {
         {
             selectionManager.isSelecting = false;
             selectionManager.selectedBees = selectedBees;
+            selectionManager.selectedWBees = selectedWBees;
 
             // our job is done so time to say goodnight
             Destroy(this.gameObject);
@@ -44,12 +46,20 @@ public class SelectionTrigger : MonoBehaviour {
     {
         Debug.Log(otherObject.gameObject.name);
         if (otherObject.CompareTag("Bee"))
-            selectedBees.Add(otherObject.gameObject);        
+            selectedBees.Add(otherObject.gameObject);
+
+        Debug.Log(otherObject.gameObject.name);
+        if (otherObject.CompareTag("WarriorBee"))
+            selectedWBees.Add(otherObject.gameObject);
     }
     void OnTriggerExit(Collider otherObject)
     {
         Debug.Log(otherObject.gameObject.name);
         if (otherObject.CompareTag("Bee"))
             selectedBees.Remove(otherObject.gameObject);
+
+        Debug.Log(otherObject.gameObject.name);
+        if (otherObject.CompareTag("WarriorBee"))
+            selectedWBees.Remove(otherObject.gameObject);
     }
 }

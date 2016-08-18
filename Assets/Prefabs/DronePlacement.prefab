@@ -135,7 +135,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e49aa8de35bb03a4e83e1bd07d726baa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DroneHivePrefab: {fileID: 1000010814814436, guid: fdfdd3df7e152674b8616c475846cfae,
+  DroneHivePrefab: {fileID: 1000011048901810, guid: fdfdd3df7e152674b8616c475846cfae,
     type: 2}
 --- !u!136 &136000013047233450
 CapsuleCollider:
