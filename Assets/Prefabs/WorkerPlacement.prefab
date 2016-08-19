@@ -147,5 +147,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51fad5fc3cb71774fa3b61be3b481059, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WorkerHivePrefab: {fileID: 1000012075361816, guid: c62005e0de77c0b4aaceed7f5fb6acb2,
+  WorkerHivePrefab: {fileID: 1000014115190298, guid: c62005e0de77c0b4aaceed7f5fb6acb2,
     type: 2}

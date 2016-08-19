@@ -20,6 +20,7 @@ public class Bee : MonoBehaviour {
     private float maxPollen = 25; // Max Wax carry over
     public float moveSpeed = 5.0f; 
     private Vector3 destination; // Vector fed to the navmesh agent
+    public float Health = 1;
 
     //Animation Variables
     private Animator animator;
@@ -31,7 +32,6 @@ public class Bee : MonoBehaviour {
         Idle,
         Gather,
         Return,
-        Attack,
         Move
     }
     public PlayerState playerState;
@@ -59,18 +59,20 @@ public class Bee : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-       
+
         agent.SetDestination(destination);
 
         GatherState();
         ReturnState();
-        AttackState();
-
+        
         if (nectar > maxNextar)
         {
             nectar = maxNextar;
             playerState = PlayerState.Return;
         }
+
+        if (Health <= 0)
+            Destroy(this.gameObject);
     }
 
     public void MoveTo(Vector3 newDestination)
@@ -143,14 +145,9 @@ public class Bee : MonoBehaviour {
         }
     }
 
-    public void AttackState()
+    public void TakeDamage(float Damage)
     {
-        if (playerState == PlayerState.Attack)
-        {
-            animationLock = true;
-        }
-        else
-            animationLock = false;
+        Health -= Damage * Time.deltaTime;
     }
 
 }

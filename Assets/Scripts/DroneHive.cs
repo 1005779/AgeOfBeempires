@@ -28,7 +28,7 @@ public class DroneHive : MonoBehaviour {
     {
         if (queenHive.honey >= 5)
         {
-            queenHive.honey -= 5;  // Subtract cost oh hive
+            queenHive.honey -= 5;  // Subtract cost from hive
                         
             GameObject Instance = Instantiate(beeType, spawnLocation, transform.rotation) as GameObject;
         }

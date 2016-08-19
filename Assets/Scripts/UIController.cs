@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIController : MonoBehaviour {
     // Nessesary links
@@ -47,7 +48,7 @@ public class UIController : MonoBehaviour {
         wax.text = "Wax: " + Wax;
     }
 
-    void Pause()
+    public void Pause()
     {
         // When esc key is pressed game will pause or play
         if(Input.GetKeyDown(KeyCode.Escape))
@@ -71,7 +72,7 @@ public class UIController : MonoBehaviour {
     Buttons
     */
 
-    void Play()
+    public void Play()
     {
         pauseCanvas.gameObject.SetActive(false);  //Turns Off Pause Canvas
         playCanvas.gameObject.SetActive(true);  // activates the play Canvas
@@ -79,13 +80,19 @@ public class UIController : MonoBehaviour {
         selection.GetComponent<SelectionManager>().enabled = true; // Dissables Player interaction
     }
 
-    void Main()
+    public void Main()
     {
-
+        SceneManager.LoadScene(0);
     }
 
-    void Quit()
+    public void Quit()
     {
-       
+        Debug.Log("Quit Application");
+        Application.Quit();
+    }
+
+    public void Level1()
+    {
+        SceneManager.LoadScene(1);
     }
 }

@@ -64,21 +64,24 @@ public class WarriorBee : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Wasp")
+        if (other.tag == "Wasp")
         {
             StartCoroutine(AnimationDelay(PlayerState.Attack, 0.75f));
             // Run TakeDamage on wasp
-            //other.GetComponent<Wasp>.TakeDamage(Damage);
-            if(  animationLock != true)
-            {
-                health = 0;
-            }
+            other.GetComponent<Wasp>().TakeDamage(Damage);
+            health = 0;
+        }
+
+        if (other.CompareTag("WaspHive"))
+        {
+            other.GetComponent<WaspHive>().TakeDamage(Damage);
+            health = 0;
         }
     }
 
-    void TakeDamage(float damage)
+    public void TakeDamage(float damage)
     {
-        health -= damage;  
+        health -= damage * Time.deltaTime;  
     }
 
     void Seppuku()

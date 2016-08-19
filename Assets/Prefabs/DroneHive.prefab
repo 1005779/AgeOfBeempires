@@ -167,8 +167,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 854162a67b63cd744abdcb8787d76b19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  beeType: {fileID: 1000012115126328, guid: f8eb89c67c5ea634aae62894ad50acd4, type: 2}
+  beeType: {fileID: 1000010044403822, guid: f8eb89c67c5ea634aae62894ad50acd4, type: 2}
   spawn: {fileID: 1000011277894062}
+  spawnLocation: {x: 0, y: 0, z: 0}
 --- !u!136 &136000010836915702
 CapsuleCollider:
   m_ObjectHideFlags: 1

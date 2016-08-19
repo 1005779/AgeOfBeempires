@@ -23,6 +23,8 @@ public class QueenHive : MonoBehaviour {
     // Timers Variables
     public float honeyTime = 2;
 
+    private float health = 10;
+
     // Use this for initialization
     void Start()
     {
@@ -38,7 +40,9 @@ public class QueenHive : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         Food();
-        //Currency();
+
+        if (health <= 0)
+            Destroy(this.gameObject);
 	}
 
     // Transfer The Pollen Value To the bee then tell it to wait state
@@ -62,12 +66,8 @@ public class QueenHive : MonoBehaviour {
         }
     }
 
-    public void Currency()
-    {       
-        if (honey >= 2)
-            {
-                wax += honey;
-                honey -= wax;
-            }               
+    public void TakeDamage(float Damage)
+    {
+        health -= Damage * Time.deltaTime;
     }
 }
