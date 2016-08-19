@@ -39,10 +39,10 @@ public class Bee : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        selectionManager = GameManager.FindObjectOfType<SelectionManager>();
-        queenHive = GameManager.FindObjectOfType<QueenHive>();
+        selectionManager = GameObject.FindObjectOfType<SelectionManager>();
+        queenHive = GameObject.FindObjectOfType<QueenHive>();
 
-        animator = GetComponent<Animator>(); // Get the animator
+        animator = GetComponentInChildren<Animator>(); // Get the animator
 
         agent = GetComponent<NavMeshAgent>();
         destination = transform.position;
@@ -59,8 +59,7 @@ public class Bee : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        animator.SetFloat("WalkSpeed", Mathf.Max(0.01f, agent.velocity.magnitude / agent.speed));
-
+       
         agent.SetDestination(destination);
 
         GatherState();

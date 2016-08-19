@@ -13,7 +13,7 @@ public class SelectionTrigger : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        selectionManager = GameManager.FindObjectOfType<SelectionManager>();
+        selectionManager = GameObject.FindObjectOfType<SelectionManager>();
     }
 
     void Update()

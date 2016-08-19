@@ -28,12 +28,12 @@ public class WarriorBee : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        gameManager = GameManager.FindObjectOfType<GameManager>();
-        droneHive = GameManager.FindObjectOfType<DroneHive>();
+        gameManager = GameObject.FindObjectOfType<GameManager>();
+        droneHive = GameObject.FindObjectOfType<DroneHive>();
         agent = GetComponent<NavMeshAgent>();
         destination = transform.position;
 
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
 	}
 
     IEnumerator AnimationDelay(PlayerState thisPlayerState, float waitTime)

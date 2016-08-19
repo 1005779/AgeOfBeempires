@@ -9,7 +9,7 @@ public class WarriorBeeAnimations : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        warriorBee = GetComponent<WarriorBee>();
+        warriorBee = GetComponentInParent<WarriorBee>();
         animator = GetComponent<Animator>();
     }
 	
@@ -20,7 +20,15 @@ public class WarriorBeeAnimations : MonoBehaviour {
         switch (warriorBee.playerState)
         {
             case WarriorBee.PlayerState.Attack:
+                animator.Play("WBAttack");
+                break;
+
+            case WarriorBee.PlayerState.Idle:
                 animator.Play("WBIdle");
+                break;
+
+            case WarriorBee.PlayerState.Walk:
+                animator.Play("WBMove");
                 break;
         }
 	

@@ -8,13 +8,14 @@ public class DroneHive : MonoBehaviour {
 
     public GameObject beeType;
     public GameObject spawn;
+    public Vector3 spawnLocation;
 
 	// Use this for initialization
 	void Start () {
         selectionManager = GameManager.FindObjectOfType<SelectionManager>();
         queenHive = GameManager.FindObjectOfType<QueenHive>();
-	    
 
+        spawnLocation = spawn.transform.position;
 	}
 
     // Update is called once per frame
@@ -25,17 +26,11 @@ public class DroneHive : MonoBehaviour {
 
     public void SpawnBee()
     {
-        if (!selectionManager.isPlacingBuilding && queenHive.honey >= 5)
+        if (queenHive.honey >= 5)
         {
             queenHive.honey -= 5;  // Subtract cost oh hive
-
-            selectionManager.isPlacingBuilding = true;  // enable building placement mode
-
-            selectionManager.selectedBees.Clear();  // Clear the selected units
-
-            selectionManager.Update_MousePosition();  // Force an update of the mouse possition
-
-            GameObject BeeSpawn = Instantiate(beeType, spawn.transform.position, transform.rotation) as GameObject;
+                        
+            GameObject Instance = Instantiate(beeType, spawnLocation, transform.rotation) as GameObject;
         }
     }
 }

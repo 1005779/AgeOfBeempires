@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class WorkerHive : MonoBehaviour {
+public class MEGABEE : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
