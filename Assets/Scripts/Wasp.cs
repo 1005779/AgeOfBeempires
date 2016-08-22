@@ -7,16 +7,16 @@ public class Wasp : MonoBehaviour {
     public float moveSpeed = 5.0f;
     private Vector3 destination; // Vector fed to the navmesh agent
 
+    Vector3 currentPos;
     private GameObject[] Bees;
     private GameObject bMin = null;
     private float minDistA = Mathf.Infinity;
-    private Vector3 closestBee;
+    private Vector3 closestTarget;
 
     private GameObject[] WarBee;
     private GameObject wMin = null;
     private float minDistB = Mathf.Infinity;
-    private Vector3 closestWBee;
-
+    
     private GameObject QueenHive;
 
     public float health = 100;
@@ -54,6 +54,7 @@ public class Wasp : MonoBehaviour {
 
         agent.SetDestination(destination);
 
+        NextTarget();
     }
 
     public void MoveTo(Vector3 newDestination)
@@ -82,7 +83,40 @@ public class Wasp : MonoBehaviour {
 
     void NextTarget()
     {
+        Bees = GameObject.FindGameObjectsWithTag("Bee");
+        currentPos = transform.position;
+        foreach(GameObject b in Bees)
+        {
+            float dist = Vector3.Distance(b.transform.position, currentPos);
+            if (dist < minDistA)
+            {
+                bMin = b;
+                minDistA = dist;
+            }
+        }
+        closestTarget = bMin.transform.position;
         
+        if( Bees.Length == 0)
+        {
+            WarBee = GameObject.FindGameObjectsWithTag("WarriorBee");
+            currentPos = transform.position;
+            foreach (GameObject WB in WarBee)
+            {
+                float dist = Vector3.Distance(WB.transform.position, currentPos);
+                if (dist < minDistB)
+                {
+                    wMin = WB;
+                    minDistB = dist;
+                }
+            }
+            closestTarget = wMin.transform.position;
+        }
+        if(Bees.Length == 0 && WarBee.Length == 0)
+        {
+            closestTarget = QueenHive.transform.position;
+        }
+
+        MoveTo(closestTarget);
     }
 
 
